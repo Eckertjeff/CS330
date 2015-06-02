@@ -28,7 +28,8 @@ void *PrintAlpha(void *alphachar)
 		printf("%c",letter);
 		fflush(stdout);
 		for (j=0; j<10000000; j++)
-		{}
+		{}//May be optimized out by the compiler, used to add delay
+		  //without taking the process off the CPU.
 	}
 	printf("\n");
 	return NULL;
