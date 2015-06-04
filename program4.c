@@ -8,7 +8,7 @@ int FIFO(int*, int, int*, int);
 int LRU(int*, int, int*, int);
 int Optimal(int*, int, int*, int, int*);
 int frameExists(int*, int, int);
-void cleanup(int*, int);
+void Cleanup(int*, int);
 
 int main (int argc, char *argv[])
 {
@@ -83,7 +83,7 @@ int FIFO(int *input, int size, int *frame, int framecount)
 			fifo++;
 		}
 	}
-	cleanup(frame, framecount);
+	Cleanup(frame, framecount);
 	return fifo;
 }
 
@@ -121,7 +121,7 @@ int LRU(int *input, int size, int *frame, int framecount)
 			lru++;
 		}
 	}
-	cleanup(frame, framecount);
+	Cleanup(frame, framecount);
 	return lru;
 }
 
@@ -140,7 +140,7 @@ int Optimal(int *input, int size, int *frame, int framecount, int *future)
 	int i, j, count, furthest, furthestcount, replacement, opt=0;
 	for(i=0; i < size; i++)
 	{
-		cleanup(future, 10);
+		Cleanup(future, 10);
 		count = 0;
 		furthest = 0;
 		furthestcount = 0;
@@ -180,7 +180,7 @@ int Optimal(int *input, int size, int *frame, int framecount, int *future)
 			}
 		}
 	}
-	cleanup(frame, framecount);
+	Cleanup(frame, framecount);
 	return opt;
 }
 
@@ -198,7 +198,7 @@ int frameExists(int *frame, int value, int count)
 }
 
 //Resets all the previously used positions in the frame array to -1.
-void cleanup(int *frame, int framecount)
+void Cleanup(int *frame, int framecount)
 {
 	int i;
 	for(i=0; i<framecount+1; i++)
