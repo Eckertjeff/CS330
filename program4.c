@@ -7,7 +7,7 @@ void formatInput(int*, char*, int*, int*);
 int FIFO(int*, int, int*, int);
 int LRU(int*, int, int*, int);
 int Optimal(int*, int, int*, int, int*);
-int frameexists(int*, int, int);
+int frameExists(int*, int, int);
 void cleanup(int*, int);
 
 int main (int argc, char *argv[])
@@ -73,7 +73,7 @@ int FIFO(int *input, int size, int *frame, int framecount)
 	int i, j, fifo=0;
 	for(i=0; i < size; i++)
 	{
-		if(frameexists(frame, input[i], framecount) == -1)
+		if(frameExists(frame, input[i], framecount) == -1)
 		{
 			for(j=0; j < framecount; j++)
 			{
@@ -102,7 +102,7 @@ int LRU(int *input, int size, int *frame, int framecount)
 	int i, j, lru=0, index;
 	for(i=0; i < size; i++)
 	{
-		index = frameexists(frame, input[i], framecount);
+		index = frameExists(frame, input[i], framecount);
 		if (index >= 0)
 		{
 			for(j=0; j < index; j++)
@@ -144,11 +144,11 @@ int Optimal(int *input, int size, int *frame, int framecount, int *future)
 		count = 0;
 		furthest = 0;
 		furthestcount = 0;
-		if(frameexists(frame, input[i], framecount) == -1)
+		if(frameExists(frame, input[i], framecount) == -1)
 		{
-			if(frameexists(frame, -1, framecount)>=0)
+			if(frameExists(frame, -1, framecount)>=0)
 			{
-				frame[frameexists(frame, -1, framecount)] = input[i];
+				frame[frameExists(frame, -1, framecount)] = input[i];
 				opt++;
 			}
 			else
@@ -156,14 +156,14 @@ int Optimal(int *input, int size, int *frame, int framecount, int *future)
 				for(j=i+1; j<size; j++)
 				{
 					count++;
-					if((frameexists(frame, input[j], framecount) >= 0) && (future[input[j]] < count) && (future[input[j]] < 1))
+					if((frameExists(frame, input[j], framecount) >= 0) && (future[input[j]] < count) && (future[input[j]] < 1))
 					{
 						future[input[j]] = count;
 					}
 				}
 				for(j=0; j<10; j++)
 				{
-					if((frameexists(frame, j, framecount) >= 0) && (future[j] == -1))
+					if((frameExists(frame, j, framecount) >= 0) && (future[j] == -1))
 					{
 						furthestcount = 100000;
 						furthest = j;
@@ -174,7 +174,7 @@ int Optimal(int *input, int size, int *frame, int framecount, int *future)
 						furthest = j;
 					}
 				}
-				replacement = frameexists(frame, furthest, framecount);
+				replacement = frameExists(frame, furthest, framecount);
 				frame[replacement] = input[i];
 				opt++;
 			}
@@ -186,7 +186,7 @@ int Optimal(int *input, int size, int *frame, int framecount, int *future)
 
 //Searches the frame, if the value exists, return the position.
 //Otherwise return -1. 
-int frameexists(int *frame, int value, int count)
+int frameExists(int *frame, int value, int count)
 {
 	int i;
 	for(i=0; i < count; i++)
